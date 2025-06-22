@@ -2,7 +2,7 @@
 # 项目特定的逻辑。
 #
 
-file(GLOB SOURCE_FILE "src/*.cpp" "src/Core/*.cpp" "src/Tools/*.cpp")
+file(GLOB SOURCE_FILE "src/*.cpp" "src/Core/*.cpp" "src/Tools/*.cpp" "src/stb_image.cpp")
 
 # 将源代码添加到此项目的可执行文件。
 add_executable (LidView ${SOURCE_FILE})
