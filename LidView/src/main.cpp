@@ -1,4 +1,4 @@
-﻿// LidView.cpp: 定义应用程序的入口点。
+﻿// main.cpp: 定义应用程序的入口点。
 //
 
 #include "App.h"
