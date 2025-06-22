@@ -16,6 +16,7 @@ target_include_directories(LidView PRIVATE
 	${CMAKE_SOURCE_DIR}/extern/glad/include 
 	${CMAKE_SOURCE_DIR}/LidView/src/Core
 	${CMAKE_SOURCE_DIR}/LidView/src/Tools
+	${CMAKE_SOURCE_DIR}/extern/
 )
 
 # TODO: 如有需要，请添加测试并安装目标。
