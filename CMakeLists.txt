@@ -13,3 +13,6 @@ project ("LidView")
 
 # 包含子项目。
 add_subdirectory ("LidView")
+
+add_subdirectory("extern/glfw")
+add_subdirectory("extern/glad")
