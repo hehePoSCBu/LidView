@@ -1,9 +1,11 @@
 #pragma once
 
-#include"../App.h"
-#include"Object.h"
-#include<vector>
-#include<memory>
+#include<glad/glad.h>
+#include <GLFW/glfw3.h>
+#include "Object.h"
+#include "Level.h"
+#include <vector>
+#include <memory>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void process_input_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -15,11 +17,13 @@ public:
 	~Application();
 	int run();
 
-	void add_object(std::unique_ptr<Object> object);
+	void RegisterObject(const Object* obj);
+
 private:
 	GLFWwindow* window;
 
-	std::vector<std::unique_ptr<Object>> objects;
+	Level level;
+
 	const unsigned int  SCR_WIDTH = 1280;
 	const unsigned int  SCR_HEIGHT = 810;
 };

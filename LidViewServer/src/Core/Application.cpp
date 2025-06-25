@@ -41,25 +41,33 @@ Application::~Application()
 
 int Application::run()
 {
+	level.load();
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		for(auto& object : objects)
-		{
-			object->draw();
-		}
+		level.draw();
 
 		glfwSwapBuffers(window);	
 		glfwPollEvents();
 	}
+
+	level.unload();
 	return 0;
 }
 
-void Application::add_object(std::unique_ptr<Object> object)
+void Application::RegisterObject(const Object* obj)
 {
-	objects.push_back(std::move(object));
+	if (obj)
+	{
+		level.RegisterObject(obj);
+	}
+	else
+	{
+		std::cerr << "Error: Attempted to register a null object." << std::endl;
+	}
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
