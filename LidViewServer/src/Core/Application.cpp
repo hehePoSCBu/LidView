@@ -1,5 +1,12 @@
 #include "Application.h"
 #include <cstdlib>
+#include<iostream>
+
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include<GLFW/glfw3native.h>
+
+#include <imm.h>
+#pragma comment(lib, "imm32.lib")
 
 Application::Application(int argc, char *argv[])
 {
@@ -24,6 +31,16 @@ Application::Application(int argc, char *argv[])
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetKeyCallback(window, process_input_callback);
+	
+	hwnd = glfwGetWin32Window(window);
+
+	// 关闭输入法，保证按键不被IME拦截
+	HIMC hIMC = ImmGetContext(hwnd);
+	if (hIMC) {
+		ImmSetOpenStatus(hIMC, FALSE);
+		ImmReleaseContext(hwnd, hIMC);
+	}
+
 	// Initialize GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -41,38 +58,15 @@ Application::~Application()
 
 int Application::run()
 {
-	level.load();
-
+	glClearColor(0.3f, 0.6f, 0.9f, 1.0f);
 	while (!glfwWindowShouldClose(window))
 	{
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		level.draw();
 
 		glfwSwapBuffers(window);	
 		glfwPollEvents();
 	}
-
-	level.unload();
 	return 0;
-}
-
-void Application::RegisterObject(const Object* obj)
-{
-	if (obj)
-	{
-		level.RegisterObject(obj);
-	}
-	else
-	{
-		std::cerr << "Error: Attempted to register a null object." << std::endl;
-	}
-}
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-	glViewport(0, 0, width, height);
 }
 
 void process_input_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -81,12 +75,26 @@ void process_input_callback(GLFWwindow* window, int key, int scancode, int actio
 	{
 		switch (key)
 		{
-		case GLFW_KEY_ESCAPE:
-			glfwSetWindowShouldClose(window, true);
-			break;
-
-		default:
-			break;
+		case GLFW_KEY_W:
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		}
 	}
+	else if (action == GLFW_RELEASE)
+	{
+		switch (key)
+		{
+
+		}
+	}
+	else if (action == GLFW_REPEAT)
+	{
+		switch (key)
+		{
+		}
+	}
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+	glViewport(0, 0, width, height);
 }

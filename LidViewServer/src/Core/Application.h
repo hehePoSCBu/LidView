@@ -2,10 +2,9 @@
 
 #include<glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "Object.h"
-#include "Level.h"
 #include <vector>
 #include <memory>
+#include <Windows.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void process_input_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -13,17 +12,14 @@ void process_input_callback(GLFWwindow* window, int key, int scancode, int actio
 class Application
 {
 public:
-	Application(int argc=0, char *argv[]=nullptr);
+	Application(int argc, char *argv[]);
 	~Application();
 	int run();
-
-	void RegisterObject(const Object* obj);
-
 private:
 	GLFWwindow* window;
 
-	Level level;
-
 	const unsigned int  SCR_WIDTH = 1280;
 	const unsigned int  SCR_HEIGHT = 810;
+
+	HWND hwnd;
 };

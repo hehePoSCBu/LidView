@@ -4,11 +4,10 @@ file(GLOB_RECURSE SOURCE_FILES "src/*.cpp")
 
 add_library(LidViewServer STATIC ${SOURCE_FILES})
 
-target_link_libraries(LidViewServer PRIVATE glfw glad assimp)
+target_link_libraries(LidViewServer PRIVATE glfw glad)
 target_include_directories(LidViewServer PRIVATE 
 	../extern/glad/include 
 	../extern/glfw/include
-	../extern/assimp/include
 	../extern/glm
 	../LidViewServer/src
 	../extern
