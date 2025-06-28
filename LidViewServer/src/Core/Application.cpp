@@ -4,13 +4,12 @@
 
 #if defined(WIN32)
 	#define GLFW_EXPOSE_NATIVE_WIN32
+	#include <imm.h>
+	#pragma comment(lib, "imm32.lib")
 #elif defined(__linux__)
 	#define GLFW_EXPOSE_NATIVE_X11
 #endif
 #include<GLFW/glfw3native.h>
-
-#include <imm.h>
-#pragma comment(lib, "imm32.lib")
 
 Application::Application(int argc, char *argv[])
 {
