@@ -7,8 +7,8 @@
 
 #if defined(WIN32)
 	#include <Windows.h>
-#elif defined(__linux__)
-	#include<X11/Xlib.h>
+#elif defined(__linux__) || defined(linux) || defined(__unix__)
+	#include <X11/Xlib.h>
 #endif
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -29,7 +29,7 @@ private:
 #if defined(WIN32)
 	HWND hwnd;
 	HIMC hIMC;
-#elif defined(__linux__)
+#elif defined(__linux__) || defined(linux) || defined(__unix__)
 	Window x11_window;
 	Display* x11_display;
 #endif
