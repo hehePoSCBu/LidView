@@ -19,6 +19,7 @@ project ("LidView")
 add_subdirectory("extern/glfw")
 add_subdirectory("extern/glad")
 add_subdirectory("extern/glm")
+add_subdirectory("extern/assimp")
 
 add_subdirectory("LidViewServer")
 add_subdirectory ("LidViewClient")
