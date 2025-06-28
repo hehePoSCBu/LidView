@@ -4,7 +4,10 @@
 #include <GLFW/glfw3.h>
 #include <vector>
 #include <memory>
-#include <Windows.h>
+
+#if defined(WIN32)
+	#include <Windows.h>
+#endif
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void process_input_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
