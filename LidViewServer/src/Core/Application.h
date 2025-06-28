@@ -21,5 +21,13 @@ private:
 	const unsigned int  SCR_WIDTH = 1280;
 	const unsigned int  SCR_HEIGHT = 810;
 
+#if defined(WIN32)
 	HWND hwnd;
+#elif defined(__linux__)
+	Window x11_window;
+	Display* x11_display;
+#elif defined(__APPLE__)
+
+#endif
+	HIMC hIMC;
 };

@@ -32,15 +32,19 @@ Application::Application(int argc, char *argv[])
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetKeyCallback(window, process_input_callback);
 	
+#if defined(WIN32)
 	hwnd = glfwGetWin32Window(window);
 
 	// 关闭输入法，保证按键不被IME拦截
-	HIMC hIMC = ImmGetContext(hwnd);
+	hIMC = ImmGetContext(hwnd);
 	if (hIMC) {
 		ImmSetOpenStatus(hIMC, FALSE);
 		ImmReleaseContext(hwnd, hIMC);
 	}
-
+#elif defined(__linux__)
+	x11_window = glfwGetX11Window(window);
+	x11_display = glfwGetX11Display();
+#endif
 	// Initialize GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -77,6 +81,11 @@ void process_input_callback(GLFWwindow* window, int key, int scancode, int actio
 		{
 		case GLFW_KEY_W:
 			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			break;
+
+		case GLFW_KEY_ESCAPE:
+			glfwSetWindowShouldClose(window, true);
+			break;
 		}
 	}
 	else if (action == GLFW_RELEASE)
