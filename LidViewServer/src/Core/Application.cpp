@@ -69,6 +69,8 @@ int Application::run()
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
+		
+		level.run();
 
 		glfwSwapBuffers(window);	
 		glfwPollEvents();

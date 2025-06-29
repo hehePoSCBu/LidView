@@ -11,8 +11,16 @@
 	#include <X11/Xlib.h>
 #endif
 
+#include"Level.h"
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void process_input_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+struct InputManager
+{
+	std::vector<bool> key_states;
+	bool get_key_state(int key) { return key_states[key]; }
+};
 
 class Application
 {
@@ -25,6 +33,9 @@ private:
 
 	const unsigned int  SCR_WIDTH = 1280;
 	const unsigned int  SCR_HEIGHT = 810;
+
+	Level level;
+	InputManager input_manager;
 
 #if defined(WIN32)
 	HWND hwnd;
