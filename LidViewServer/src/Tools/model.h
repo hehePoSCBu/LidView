@@ -7,6 +7,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include "shader.h"
 
 struct Vertex {
     glm::vec3 Position;
@@ -23,7 +24,7 @@ struct Texture {
 class Mesh {
 public:
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
-    void Draw(GLuint shaderProgram);
+    void Draw(Shader& shader);
 
 private:
     void setupMesh();
@@ -38,7 +39,15 @@ private:
 class Model {
 public:
     Model(const char* path) { loadModel(path); }
-    void Draw(GLuint shaderProgram);
+    void Draw(Shader& shader);
+
+    // 模型变换
+    glm::vec3 position = glm::vec3(0.0f);
+    glm::vec3 scale = glm::vec3(1.0f);
+    glm::vec3 rotation = glm::vec3(0.0f); // 欧拉角 (度)
+
+    // 获取模型矩阵
+    glm::mat4 getModelMatrix() const;
 
 private:
     void loadModel(std::string path);
@@ -52,5 +61,5 @@ private:
     std::vector<Mesh> meshes;
     std::string directory;
     std::vector<Texture> textures_loaded;
-    const aiScene* currentScene; // 添加当前场景引用
+    const aiScene* currentScene;
 };

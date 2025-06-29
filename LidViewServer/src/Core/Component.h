@@ -1,0 +1,6 @@
+#pragma oce
+
+class RenderComponent
+{
+
+};

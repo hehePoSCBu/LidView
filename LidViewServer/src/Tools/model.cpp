@@ -32,7 +32,7 @@ void Mesh::setupMesh() {
     glBindVertexArray(0);
 }
 
-void Mesh::Draw(GLuint shaderProgram) {
+void Mesh::Draw(Shader& shader) {
     unsigned int diffuseNr = 1;
     unsigned int specularNr = 1;
 
@@ -45,7 +45,7 @@ void Mesh::Draw(GLuint shaderProgram) {
         else if (name == "texture_specular")
             number = std::to_string(specularNr++);
 
-        glUniform1i(glGetUniformLocation(shaderProgram, (name + number).c_str()), i);
+        shader.setInt(("material." + name + number).c_str(), i);
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
     }
     glActiveTexture(GL_TEXTURE0);
@@ -56,9 +56,20 @@ void Mesh::Draw(GLuint shaderProgram) {
     glBindVertexArray(0);
 }
 
-void Model::Draw(GLuint shaderProgram) {
+void Model::Draw(Shader& shader) {
+    shader.setMat4("model", getModelMatrix());
     for (unsigned int i = 0; i < meshes.size(); i++)
-        meshes[i].Draw(shaderProgram);
+        meshes[i].Draw(shader);
+}
+
+glm::mat4 Model::getModelMatrix() const {
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, position);
+    model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::scale(model, scale);
+    return model;
 }
 
 void Model::loadModel(std::string path) {
@@ -84,7 +95,7 @@ void Model::loadModel(std::string path) {
     }
 
     const aiScene* scene = importer.ReadFile(path, flags);
-    currentScene = scene; // 保存场景引用
+    currentScene = scene;
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         std::cerr << "Assimp错误: " << importer.GetErrorString() << std::endl;
@@ -102,7 +113,6 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
         meshes.push_back(processMesh(mesh, scene));
     }
 
-    // 简化处理：只处理网格，忽略相机和灯光
     // 递归处理子节点
     for (unsigned int i = 0; i < node->mNumChildren; i++) {
         processNode(node->mChildren[i], scene);
@@ -165,7 +175,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
     return Mesh(vertices, indices, textures);
 }
 
-std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene) {
+std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type,
+    std::string typeName, const aiScene* scene) {
     std::vector<Texture> textures;
 
     // 特殊处理 FBX 的嵌入纹理
@@ -185,20 +196,18 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
 
                     // 处理压缩纹理
                     if (tex->mHeight == 0) {
-                        texture.id = textureFromMemory(reinterpret_cast<const unsigned char*>(tex->pcData), tex->mWidth);
+                        texture.id = textureFromMemory(
+                            reinterpret_cast<const unsigned char*>(tex->pcData), tex->mWidth);
                     }
                     // 处理未压缩纹理
                     else {
                         texture.id = textureFromPixels(tex->pcData, tex->mWidth, tex->mHeight);
                     }
+                    textures.push_back(texture);
+                    textures_loaded.push_back(texture);
+                    return textures;
                 }
             }
-            else {
-                texture.id = textureFromFile(path.C_Str(), directory);
-            }
-
-            textures.push_back(texture);
-            return textures;
         }
     }
 
