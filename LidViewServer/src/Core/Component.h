@@ -20,7 +20,7 @@ private:
 class RenderComponent :public Component
 {
 public:
-	void initialize(Shader* shader, Model* model);
+	void onCreate(Shader* shader, Model* model);
 private:
 	Shader* shader;
 	Model* model;

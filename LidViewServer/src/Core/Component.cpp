@@ -1,6 +1,6 @@
 #include"Component.h"
 
-void RenderComponent::initialize(Shader* shader, Model* model)
+void RenderComponent::onCreate(Shader* shader, Model* model)
 {
 	this->shader = shader;
 	this->model = model;

@@ -53,3 +53,13 @@ virtual void Object::onDestroy()
 	}
 	components.clear();
 }
+
+Player::Player(glm::vec3 pos)
+{
+	this->pos = pos;
+
+	RenderComponent PlayerRenderer;
+
+	components.push_back(PlayerRenderer);
+	this->onCreate();
+}
