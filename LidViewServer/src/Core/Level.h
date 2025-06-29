@@ -5,7 +5,7 @@
 class Level
 {
 public:
-	Level() {}
+	Level();
 	void run();
 
 private:

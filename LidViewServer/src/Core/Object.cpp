@@ -5,15 +5,18 @@ void Object::RegisterComponent(Component& component)
 	components.push_back(&component);
 }
 
-virtual void Object::onCreate()
+void Object::onCreate()
 {
 	for (auto& component : components)
 	{
 		component->onCreate();
 	}
+
+	count++;
+	id = count;
 }
 
-virtual void Object::onEnable()
+void Object::onEnable()
 {
 	for (auto& component : components)
 	{
@@ -21,7 +24,7 @@ virtual void Object::onEnable()
 	}
 }
 
-virtual void Object::onDisable()
+void Object::onDisable()
 {
 	for (auto& component : components)
 	{
@@ -29,37 +32,33 @@ virtual void Object::onDisable()
 	}
 }
 
-virtual void Object::onActive()
-{
-	for (auto& component : components)
-	{
-		component->onActive();
-	}
-}
-
-virtual void Object::onDeactive()
-{
-	for (auto& component : components)
-	{
-		component->onDeactive();
-	}
-}
-
-virtual void Object::onDestroy()
+void Object::onDestroy()
 {
 	for (auto& component : components)
 	{
 		component->onDestroy();
 	}
 	components.clear();
+	count--;
 }
 
-Player::Player(glm::vec3 pos)
+void Object::update()
+{
+	for (auto& component : components)
+	{
+		//更新组件
+		component->onEnable();
+		component->onDisable();
+	}
+}
+
+void Player::onCreate(glm::vec3 pos, RenderComponent PlayerRenderer)
 {
 	this->pos = pos;
+	RegisterComponent(PlayerRenderer);
+}
 
-	RenderComponent PlayerRenderer;
+void Player::update()
+{
 
-	components.push_back(PlayerRenderer);
-	this->onCreate();
 }

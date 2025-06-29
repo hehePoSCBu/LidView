@@ -7,20 +7,19 @@ class Component
 {
 public:
 	//生命周期成员函数
-	virtual void onCreate() {}
+	virtual void onCreate() { count++; id = count; }
 	virtual void onEnable() {}
 	virtual void onDisable() {}
-	virtual void onActive() {}
-	virtual void onDeactive() {}
-	virtual void onDestroy() {}
+	virtual void onDestroy() { count--; }
 private:
-	int id;
+	static long count;
+	long id;
 };
 
 class RenderComponent :public Component
 {
 public:
-	void onCreate(Shader* shader, Model* model);
+	void onCreate(const char * vertex_shader_path,const char * fragment_shader_path,const char * model_path);
 private:
 	Shader* shader;
 	Model* model;

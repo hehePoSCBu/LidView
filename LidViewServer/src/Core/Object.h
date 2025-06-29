@@ -14,20 +14,24 @@ public:
 	virtual void onCreate();
 	virtual void onEnable();
 	virtual void onDisable();
-	virtual void onActive();
-	virtual void onDeactive();
 	virtual void onDestroy();
 
 	//组件管理
 	void RegisterComponent(Component& component);
+
+	//更新
+	void update();
 private:
 	std::vector<Component*> components;
+	static long count;
+	long id;
 };
 
 class Player :public Object
 {
 public:
-	Player(glm::vec3 pos);
+	void onCreate(glm::vec3 pos, RenderComponent PlayerRenderer);
+	void update();
 
 private:
 	glm::vec3 pos;
