@@ -3,15 +3,79 @@
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
 
+//数学相关-About Maths
 typedef glm::vec1 vec1;
 typedef glm::vec2 vec2;
 typedef glm::vec3 vec3;
 typedef glm::vec4 vec4;
 
+typedef glm::dvec1 dvec1;
+typedef glm::dvec2 dvec2;
+typedef glm::dvec3 dvec3;
+typedef glm::dvec4 dvec4;
+
+typedef glm::bvec1 bvec1;
+typedef glm::bvec2 bvec2;
+typedef glm::bvec3 bvec3;
+typedef glm::bvec4 bvec4;
+
+typedef glm::ivec1 ivec1;
+typedef glm::ivec2 ivec2;
+typedef glm::ivec3 ivec3;
+typedef glm::ivec4 ivec4;
+
+typedef glm::uvec1 uvec1;
+typedef glm::uvec2 uvec2;
+typedef glm::uvec3 uvec3;
+typedef glm::uvec4 uvec4;
+
+typedef glm::fvec1 fvec1;
+typedef glm::fvec2 fvec2;
+typedef glm::fvec3 fvec3;
+typedef glm::fvec4 fvec4;
+
 typedef glm::mat2 mat2;
 typedef glm::mat3 mat3;
-typedef glm::mat4 mat4
+typedef glm::mat4 mat4;
+typedef glm::mat2x2 mat2x2;
+typedef glm::mat2x3 mat2x3;
+typedef glm::mat2x4 mat2x4;
+typedef glm::mat3x2 mat3x2;
+typedef glm::mat3x3 mat3x3;
+typedef glm::mat3x4 mat3x4;
+typedef glm::mat4x2 mat4x2;
+typedef glm::mat4x3 mat4x3;
+typedef glm::mat4x4 mat4x4;
 
+typedef glm::dmat2 dmat2;
+typedef glm::dmat3 dmat3;
+typedef glm::dmat4 dmat4;
+typedef glm::dmat2x2 dmat2x2;
+typedef glm::dmat2x3 dmat2x3;
+typedef glm::dmat2x4 dmat2x4;
+typedef glm::dmat3x2 dmat3x2;
+typedef glm::dmat3x3 dmat3x3;
+typedef glm::dmat3x4 dmat3x4;
+typedef glm::dmat4x2 dmat4x2;
+typedef glm::dmat4x3 dmat4x3;
+typedef glm::dmat4x4 dmat4x4;
+
+typedef glm::quat quat;
+
+typedef glm::bmat2 bmat2;
+typedef glm::bmat3 bmat3;
+typedef glm::bmat4 bmat4;
+typedef glm::bmat2x2 bmat2x2;
+typedef glm::bmat2x3 bmat2x3;
+typedef glm::bmat2x4 bmat2x4;
+typedef glm::bmat3x2 bmat3x2;
+typedef glm::bmat3x3 bmat3x3;
+typedef glm::bmat3x4 bmat3x4;
+typedef glm::bmat4x2 bmat4x2;
+typedef glm::bmat4x3 bmat4x3;
+typedef glm::bmat4x4 bmat4x4;
+
+//按键状态-Key State
 #define KEY_PRESS GLFW_PRESS
 #define KEY_RELEASE GLFW_RELEASE
 #defien KEY_REPEAT GLFW_REPEAT
@@ -22,7 +86,7 @@ enum KeyState {
 	Repeat = KEY_REPEAT
 };
 
-//功能按键
+//功能按键-Function Keys
 #define KEY_ESCAPE GLFW_KEY_ESCAPE
 #define KEY_ENTER GLFW_KEY_ENTER
 #define KEY_TAB GLFW_KEY_TAB
@@ -43,7 +107,6 @@ enum KeyState {
 #define KEY_PRINT_SCREEN GLFW_KEY_PRINT_SCREEN
 #define KEY_PAUSE GLFW_KEY_PAUSE
 
-//F按键
 #define KEY_F1 GLFW_KEY_F1
 #define KEY_F2 GLFW_KEY_F2
 #define KEY_F3 GLFW_KEY_F3
@@ -70,7 +133,7 @@ enum KeyState {
 #define KEY_F24 GLFW_KEY_F24
 #define KEY_F25 GLFW_KEY_F25
 
-//数字按键
+//数字按键-Number Keys
 #define KEY_0 GLFW_KEY_0
 #define KEY_1 GLFW_KEY_1
 #define KEY_2 GLFW_KEY_2
@@ -82,7 +145,7 @@ enum KeyState {
 #define KEY_8 GLFW_KEY_8
 #define KEY_9 GLFW_KEY_9
 
-//字母按键
+//字母按键-Letter Keys
 #define KEY_A GLFW_KEY_A
 #define KEY_B GLFW_KEY_B
 #define KEY_C GLFW_KEY_C
