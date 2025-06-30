@@ -2,7 +2,8 @@
 
 Level::Level()
 {
-	player.onCreate(glm::vec3(0, 0, 0));
+	RenderComponent component(, , "../../../assets/coil.blend");
+	player.onCreate();
 }
 
 void Level::run()

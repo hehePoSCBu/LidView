@@ -60,5 +60,4 @@ void Player::onCreate(glm::vec3 pos, RenderComponent PlayerRenderer)
 
 void Player::update()
 {
-
 }
